@@ -4,3 +4,4 @@ RewriteRule ^index\\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /BP14/index.php [L]
+AddType application/javascript .js

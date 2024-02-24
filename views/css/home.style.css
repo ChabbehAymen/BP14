@@ -3,5 +3,15 @@ body{
 }
 
 .search-input{
+    transition: all 200ms;
+}
+
+.open{
     width: 30vw;
 }
+
+.closed{
+    width: 0;
+    display: none;
+}
+

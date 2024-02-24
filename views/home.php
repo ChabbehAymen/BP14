@@ -1,5 +1,6 @@
 <?php
-require 'controller/homePageController.php';
+require './controller/homeController.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,78 +14,83 @@ require 'controller/homePageController.php';
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="views/css/home.style.css">
-    <script type="module" src="views/js/home.script.js"></script>
+    <script type="module" src="views/js/home.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <!--            <img src="../config/assets/G.png" alt="" width="100" height="24">-->
             Guicher
         </a>
 
         <div class="d-flex justify-content-end align-items-center">
             <div class="d-flex align-items-center gap-3">
-                <input placeholder="Search..." class="border border-0 search-input p-1">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <input placeholder="Search..." class="border border-0 search-input p-1 rounded closed">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <?php
+                if (isset($_SESSION['loggedUser']) and $_SESSION['loggedUser'] != 0){
+                    echo'<i class="fa-solid fa-user btn"></i>';
+                }else{
+                    echo '
+            <a type="button" class="btn btn-outline-warning mx-3" href="login">login</a>
+            <a type="button" class="btn btn-outline-warning mx-3" href="signup">Sign Up</a>';
+                }
+                ?>
             </div>
-            <button type="button" class="btn btn-outline-warning mx-3" onclick="location.href='login.php'">login
-            </button>
-            <button type="button" class="btn btn-outline-warning mx-3" onclick="location.href='signup.php'">Sign Up
-            </button>
         </div>
 </nav>
 
 
-<div class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light rounded">
-    <input class="form-control me-2 m-1" type="date" placeholder="From Date" aria-label="Search" id="fromDate">
-    <!--    <img src="../config/Assets/hand.png" alt="" width="100px" height="30px" class="m-1">-->
-    <p>To</p>
-
-    <input class="form-control me-2 m-1" type="date" placeholder="From Date" aria-label="Search" id="fromDate">
+<form action="" method="post" class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light gap-3 rounded">
+    <input class="form-control me-2 m-1" type="date" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <p class="align-self-center m-0 w-50">End At</p>
+    <input class="form-control me-2 m-1" type="date" name="endDate" placeholder="From Date" aria-label="Search" id="fromDate">
     <div>
 
     </div>
-    <select class="form-select form-select-sm m-1" aria-label=".
-                form-select-sm example" name="category">
-        <option selected>Event</option>
-        <option>ALL</option>
-        <option>Only Available</option>
+    <select class="form-select form-select-sm m-1" aria-label="form-select-sm example" name="availability">
+        <option selected>Only Available</option>
+        <option>Event</option>
     </select>
     <select class="form-select form-select-sm m-1" aria-label=".
                 form-select-sm example" name="category">
-        <option selected>Category</option>
-        <option>Theatre</option>
-        <option>Comedy</option>
-        <option>Music</option>
+        <option value="all" selected>All Categories</option>
+        <?php
+        foreach (getCategories() as $_category){
+            echo '<option value='.$_category["CATEGORIE"].'>'.$_category["CATEGORIE"].'</option>';
+        }
+        ?>
     </select>
 
-</div>
+    <input class="btn btn-warning p-1 m-1" type="submit" value="filter" onclick="this.form.submit()">
 
-<section>
-    <template id="event-card-temp">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-              crossorigin="anonymous">
-        <div class="card" style="width: 18rem;">
-            <img src="views/assets/AlNU3WTK_400x400.jpg" class="card-img-top" alt="...">
-            <a href="#" class="btn btn-dark p-1 disabled m-1 align-self-start category-label">Music</a>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>20:40:00</p>
-                <a href="#" class="btn btn-warning align-self-end">Detail</a>
-            </div>
-        </div>
-    </template>
+</form>
 
+<section class="w-100 d-flex flex-wrap gap-4 ps-4 pe-4">
     <?php
     foreach (getEvents() as $event){
-        echo "<event-card img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'."category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
+//        echo "<event-card img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'."category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
+        echo'<div class="card event-card" style="width: 18rem;">
+            <img src="views/assets/AlNU3WTK_400x400.jpg" class="card-img-top" alt="...">
+            <a href="#" class="btn btn-outline-primary p-1 disabled m-1 align-self-start category-label">' . $event['CATEGORIE'] . '</a>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold">' . $event['TITRE'] . '</h5>
+                <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>' . $event['DATE'] . '</p>';
+        if (isTherePlace($event['TITRE'])){
+            echo '<a href="#" class="btn btn-warning align-self-end">J’achète</a>
+                    </div>
+                    </div>';
+        }else{
+            echo '<a href="#" class="btn btn-dark align-self-end">Guichet fermé</a>
+                    </div>
+                    </div>';
+        }
     }
     ?>
 
 </section>
 
+<footer class="p-5 bg-dark mt-4"></footer>
 
 </body>
 </html>
@@ -93,4 +99,3 @@ require 'controller/homePageController.php';
 
 
 
-<event-card img="rock-concert.jpg" title="Concert de Rock" category="Music" endtime="2023-03-01 20:00:00"></event-card>
