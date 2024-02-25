@@ -2,7 +2,7 @@
 
 class HomePageModel
 {
-    private $pdo;
+    protected $pdo;
     public function __construct()
     {
 
@@ -24,7 +24,7 @@ class HomePageModel
 
     }
 
-    public function getAllCategories()
+    final function getAllCategories()
     {
         $query = $this->pdo->prepare('SELECT DISTINCT CATEGORIE FROM EVENEMENT');
         $query->execute();

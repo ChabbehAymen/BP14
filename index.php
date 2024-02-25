@@ -1,18 +1,24 @@
 <?php
 $requestUri = $_SERVER['REQUEST_URI'];
 $viewDir = '/views/';
-// defining envrment variables
-$GLOBALS['dbLink'] = 'mysql:host=localhost;dbname=BP14;charset=UTF8';
+$baseDir = '/BP14/';
 
-switch ($requestUri){
-    case '/BP14/':
+switch (strtok($requestUri, '?')){
+    case $baseDir:
         require __DIR__.$viewDir.'home.php';
         break;
-    case '/BP14/login':
+    case $baseDir.'login':
         require __DIR__.$viewDir.'login.php';
         break;
-    case '/BP14/signup':
+    case $baseDir.'signup':
         require __DIR__.$viewDir.'signup.php';
         break;
+    case $baseDir.'profile':
+        require __DIR__.$viewDir.'profile.php';
+        break;
+    case $baseDir.'event':
+        require __DIR__.$viewDir.'event.php';
+        break;
+
 }
 

@@ -72,16 +72,16 @@ session_start();
 //        echo "<event-card img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'."category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
         echo'<div class="card event-card" style="width: 18rem;">
             <img src="views/assets/AlNU3WTK_400x400.jpg" class="card-img-top" alt="...">
-            <a href="#" class="btn btn-outline-primary p-1 disabled m-1 align-self-start category-label">' . $event['CATEGORIE'] . '</a>
+            <a class="badge text-bg-primary text-decoration-none disabled m-1 align-self-start category-label">' . $event['CATEGORIE'] . '</a>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title fw-bold">' . $event['TITRE'] . '</h5>
                 <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>' . $event['DATE'] . '</p>';
         if (isTherePlace($event['TITRE'])){
-            echo '<a href="#" class="btn btn-warning align-self-end">J’achète</a>
+            echo '<a href="event?title='.$event['TITRE'].'" class="btn btn-warning align-self-end">J’achète</a>
                     </div>
                     </div>';
         }else{
-            echo '<a href="#" class="btn btn-dark align-self-end">Guichet fermé</a>
+            echo '<a href="event?title='.$event['TITRE'].'" class="btn btn-dark align-self-end">Guichet fermé</a>
                     </div>
                     </div>';
         }
