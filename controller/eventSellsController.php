@@ -4,33 +4,42 @@ require_once(__ROOT__ . '/model/EventSellsModel.php');
 
 $model = new EventSellsModel();
 
-var_dump($_POST);
-if (isset($_POST['byTicket'])){
+if (isset($_POST['byTicket'])) {
     $tarifReduit = $_POST['tarifReduit'];
     $tarifNormal = $_POST['tarifNormal'];
-    $title = $_GET['title'];
-    var_dump($tarifReduit);
-    if (getRemainedPaces($title)-($tarifNormal+$tarifReduit) > 0){
-        var_dump($tarifReduit);
-//        $model->byTickets()
-    }
+    $id = $_GET['id'];
+
+    if (isset($_SESSION['loggedUser']) and $_SESSION['loggedUser'] != 0) {
+        if (getRemainedPaces($id) - ($tarifNormal + $tarifReduit) > 0) {
+            for ($i = 0; $i < $tarifReduit; $i++) {
+                $model->byTickets($_GET['id'],'Reduit');
+            }
+            for ($i = 0; $i < $tarifNormal; $i++) {
+                $model->byTickets($_GET['id'],'Normal');
+            }
+        }
+    }else header('Location: /BP14/login');
 }
 
-function getEvents(){
+function getEvents()
+{
     global $model;
     return $model->getAllEvents('01-01-2000', date('Y-m-d'), 'all');
 }
 
-function getRemainedPaces($title){
-    global $model;
-    return $model->getCapacityOfSallePerEventTitle($title) - $model->getNumberOfPlacesPerEventTitle($title);
-}
-function isTherePlace($title): bool
+function getRemainedPaces($ID)
 {
-    return getRemainedPaces($title)!=0;
+    global $model;
+    return $model->getCapacityOfSallePerEventTitle($ID) - $model->getNumberOfPlacesPerEventTitle($ID);
 }
 
-function getEventDetail($title){
+function isTherePlace($title): bool
+{
+    return getRemainedPaces($title) != 0;
+}
+
+function getEventDetail($id)
+{
     global $model;
-    return $model->getEventByTitle($title);
+    return $model->getEventByID($id);
 }

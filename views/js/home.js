@@ -1,5 +1,5 @@
-// import {EventCard} from "./components/EventCard.js";
-// customElements.define('event-card' ,EventCard);
+import {EventCard} from "./components/EventCard.js";
+customElements.define('event-card' ,EventCard);
 
 const searchInput = document.querySelector('.search-input');
 const eventCards = document.querySelectorAll('.event-card');

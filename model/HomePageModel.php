@@ -17,7 +17,7 @@ class HomePageModel
     {
 
         if ($category === 'all') {
-            $query = $this->pdo->prepare("SELECT TITRE, CATEGORIE, IMAGE, DATE FROM EVENEMENT INNER JOIN BP14.VERSION V on EVENEMENT.ID_EVENT = V.ID_EVENT WHERE  DATE >= $startDate AND DATE <= '$endDate'");
+            $query = $this->pdo->prepare("SELECT EVENEMENT.ID_EVENT ,TITRE , CATEGORIE, IMAGE, DATE FROM EVENEMENT INNER JOIN BP14.VERSION V on EVENEMENT.ID_EVENT = V.ID_EVENT WHERE  DATE >= $startDate AND DATE <= '$endDate'");
         } else $query = $this->pdo->prepare("SELECT TITRE, CATEGORIE, IMAGE, DATE FROM EVENEMENT INNER JOIN BP14.VERSION V on EVENEMENT.ID_EVENT = V.ID_EVENT WHERE  DATE >= $startDate AND DATE <= '$endDate' and CATEGORIE = '$category'");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -31,15 +31,15 @@ class HomePageModel
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getNumberOfPlacesPerEventTitle($title)
+    public function getNumberOfPlacesPerEventTitle($ID)
     {
-        $query = $this->pdo->prepare("SELECT COUNT(PLACE) AS TOTALP FROM BP14.FACTURE INNER JOIN BP14.BILLET USING(NUM_FACTURE) WHERE ID_VERSION = (SELECT ID_VERSION FROM BP14.EVENEMENT INNER JOIN BP14.VERSION USING(ID_EVENT) WHERE TITRE = '$title')");
+        $query = $this->pdo->prepare("SELECT COUNT(PLACE) AS TOTALP FROM BP14.FACTURE INNER JOIN BP14.BILLET USING(NUM_FACTURE) WHERE ID_VERSION = (SELECT ID_VERSION FROM BP14.EVENEMENT INNER JOIN BP14.VERSION USING(ID_EVENT) WHERE ID_EVENT = $ID)");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['TOTALP'];
     }
 
-    public function getCapacityOfSallePerEventTitle($title){
-        $query = $this->pdo->prepare("SELECT CAPACITE FROM BP14.EVENEMENT INNER JOIN (SELECT * FROM BP14.VERSION INNER JOIN BP14.SALLE USING (NUM_SALLE))  AS A USING(ID_EVENT) where TITRE = '$title'");
+    public function getCapacityOfSallePerEventTitle($ID){
+        $query = $this->pdo->prepare("SELECT CAPACITE FROM BP14.EVENEMENT INNER JOIN (SELECT * FROM BP14.VERSION INNER JOIN BP14.SALLE USING (NUM_SALLE))  AS A USING(ID_EVENT) where ID_EVENT = $ID");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['CAPACITE'];
     }
