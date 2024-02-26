@@ -4,11 +4,14 @@ require_once(__ROOT__ . '/model/EventSellsModel.php');
 
 $model = new EventSellsModel();
 
-if (isset($_POST['byTicked'])){
+var_dump($_POST);
+if (isset($_POST['byTicket'])){
     $tarifReduit = $_POST['tarifReduit'];
     $tarifNormal = $_POST['tarifNormal'];
     $title = $_GET['title'];
+    var_dump($tarifReduit);
     if (getRemainedPaces($title)-($tarifNormal+$tarifReduit) > 0){
+        var_dump($tarifReduit);
 //        $model->byTickets()
     }
 }

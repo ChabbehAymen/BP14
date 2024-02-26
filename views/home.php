@@ -76,7 +76,7 @@ session_start();
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title fw-bold">' . $event['TITRE'] . '</h5>
                 <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>' . $event['DATE'] . '</p>';
-        if (isTherePlace($event['TITRE'])){
+        if (isTherePlace ($event['TITRE'])){
             echo '<a href="event?title='.$event['TITRE'].'" class="btn btn-warning align-self-end">J’achète</a>
                     </div>
                     </div>';
