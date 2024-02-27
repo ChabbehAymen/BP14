@@ -15,10 +15,10 @@ class HomePageModel
 
     public function getAllEvents($startDate, $endDate, $category)
     {
-
-        if ($category === 'all') {
-            $query = $this->pdo->prepare("SELECT EVENEMENT.ID_EVENT ,TITRE , CATEGORIE, IMAGE, DATE FROM EVENEMENT INNER JOIN BP14.VERSION V on EVENEMENT.ID_EVENT = V.ID_EVENT WHERE  DATE >= $startDate AND DATE <= '$endDate'");
-        } else $query = $this->pdo->prepare("SELECT TITRE, CATEGORIE, IMAGE, DATE FROM EVENEMENT INNER JOIN BP14.VERSION V on EVENEMENT.ID_EVENT = V.ID_EVENT WHERE  DATE >= $startDate AND DATE <= '$endDate' and CATEGORIE = '$category'");
+        $q  ="SELECT ID_VERSION, TITRE , DATE , CATEGORIE , IMAGE , CAPACITE - COUNT(NUM_BILLET) AS 'DISPONIBLE' FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) RIGHT JOIN VERSION USING(ID_VERSION) INNER JOIN EVENEMENT USING(ID_EVENT) INNER JOIN SALLE USING (NUM_SALLE) GROUP BY ID_VERSION HAVING DATE >= '$startDate'";
+        if ($endDate != '')$q=$q." and <= '$endDate'";
+        if ($category !== 'all')$q=$q." and CATEGORIE = '$category'";
+        $query = $this->pdo->prepare($q);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -31,17 +31,11 @@ class HomePageModel
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getNumberOfPlacesPerEventTitle($ID)
+    public function getEmptyPlaces($ID)
     {
-        $query = $this->pdo->prepare("SELECT COUNT(PLACE) AS TOTALP FROM BP14.FACTURE INNER JOIN BP14.BILLET USING(NUM_FACTURE) WHERE ID_VERSION = (SELECT ID_VERSION FROM BP14.EVENEMENT INNER JOIN BP14.VERSION USING(ID_EVENT) WHERE ID_EVENT = $ID)");
+        $query = $this->pdo->prepare("SELECT CAPACITE -  COUNT(PLACE) AS TOTALP FROM BP14.FACTURE INNER JOIN BP14.BILLET USING(NUM_FACTURE) INNER JOIN VERSION USING(ID_VERSION) INNER JOIN BP14.SALLE USING(NUM_SALLE) WHERE ID_VERSION = $ID;");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['TOTALP'];
-    }
-
-    public function getCapacityOfSallePerEventTitle($ID){
-        $query = $this->pdo->prepare("SELECT CAPACITE FROM BP14.EVENEMENT INNER JOIN (SELECT * FROM BP14.VERSION INNER JOIN BP14.SALLE USING (NUM_SALLE))  AS A USING(ID_EVENT) where ID_EVENT = $ID");
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC)[0]['CAPACITE'];
     }
 
 }

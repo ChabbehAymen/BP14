@@ -12,13 +12,13 @@ require './controller/eventSellsController.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script type="module" src="views/js/home.js"></script>
+    <script type="module" src="views/js/event.js"></script>
 </head>
 
 <body>
 <nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/BP14/">
             Guicher
         </a>
 
@@ -61,7 +61,7 @@ require './controller/eventSellsController.php';
                 </label>
                 <?php
 
-                if (isTherePlace($event["ID_EVENT"])) {
+                if ($event["DISPONIBLE"] != 0) {
                     echo '<input type="submit" value="J’achète" name="byTicket" class="btn btn-warning align-self-center">
                     </div>
                     </div>';
@@ -80,8 +80,8 @@ require './controller/eventSellsController.php';
         foreach (getEvents() as $_event){
             if ($_event['TITRE'] === $event['TITRE']) continue;
             $isActive = true;
-            if (!isTherePlace ($_event['ID_EVENT'])) $isActive = false;
-            echo "<event-card id=".$_event["ID_EVENT"]." img=".$_event['IMAGE']." title=".'"'.$_event['TITRE'].'"'. "active=".$isActive." category=".$_event['CATEGORIE']." endTime=".'"'.$_event['DATE'].'"'."></event-card>";
+            if ($event["DISPONIBLE"] == 0) $isActive = false;
+            echo "<event-card id=".$_event["ID_VERSION"]." img=".$_event['IMAGE']." title=".'"'.$_event['TITRE'].'"'. "active=".$isActive." category=".$_event['CATEGORIE']." endTime=".'"'.$_event['DATE'].'"'."></event-card>";
         }
         ?>
 

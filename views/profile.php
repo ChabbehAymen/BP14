@@ -13,14 +13,6 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body class="d-flex align-items-center justify-content-center" style="height: 100vh">
-<form class="d-flex flex-column p-5 rounded shadow-lg gap-3" action="./controller/signupController.php" method="post">
-    <p class="form-label align-self-center fw-bold"> Enjoy Our Platform :)</p>
-    <input class="form-control" type="text" placeholder="Your Name" name="firstName">
-    <input class="form-control" type="text" placeholder="Last Name" name="lastName">
-    <input class="form-control" type="email" placeholder="Email Or User Name" name="email">
-    <input class="form-control" type="text" placeholder="Password" name="password">
-    <input class="align-self-center btn btn-warning" type="submit" value="Register" name="register">
-    <p class="form-text align-self-center">You Have Account? <a class="link" href="login">Login!</a></p>
-</form>
+<p>Hola</p>
 </body>
 </html>

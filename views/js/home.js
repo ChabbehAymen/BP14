@@ -2,7 +2,7 @@ import {EventCard} from "./components/EventCard.js";
 customElements.define('event-card' ,EventCard);
 
 const searchInput = document.querySelector('.search-input');
-const eventCards = document.querySelectorAll('.event-card');
+const eventCards = document.querySelectorAll('event-card');
 document.querySelector('.search-icon').addEventListener('click', e=>{
     if (e.target.classList.contains('fa-x')) searchInput.hideInput(e.target);
     else searchInput.showInput(e.target);
@@ -28,7 +28,22 @@ HTMLElement.prototype.hideInput = function (searchIcon) {
 // filltering using search input
 searchInput.addEventListener('input', e=>{
     for (const card of eventCards) {
-        if (card.querySelector('h5').innerText.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()))card.style.display='block';
+        if (card.getTitle.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()))card.style.display='block';
         else card.style.display='none';
+    }
+});
+
+document.querySelector('.active-select').addEventListener('change', e=>{
+    for (const card of eventCards){
+        if (e.target.value === 'open'){
+            if (!card.isActive()) card.style.display = 'none';
+            else card.style.display='block';
+        }
+        else if (e.target.value === 'close'){
+            if (card.isActive()) card.style.display = 'none';
+            else card.style.display='block';
+        }else {
+            card.style.display = 'block';
+        }
     }
 });

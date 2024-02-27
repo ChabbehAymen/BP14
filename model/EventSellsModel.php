@@ -4,7 +4,7 @@ session_start();
 class EventSellsModel extends HomePageModel
 {
     public function getEventByID($id){
-        $query = $this->pdo->prepare("SELECT * FROM EVENEMENT WHERE ID_EVENT = $id");
+        $query = $this->pdo->prepare("SELECT ID_VERSION, TITRE , DATE , CATEGORIE , SALLE.DESCRIPTION, IMAGE, TARIF_REDUIT, TARIF_NORMAL  , CAPACITE - COUNT(NUM_BILLET) AS 'DISPONIBLE' FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) RIGHT JOIN VERSION USING(ID_VERSION) INNER JOIN EVENEMENT USING(ID_EVENT) INNER JOIN SALLE USING (NUM_SALLE) WHERE ID_VERSION = $id GROUP BY ID_VERSION");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }

@@ -8,8 +8,8 @@ export class EventCard extends HTMLElement {
     connectedCallback() {
         let isActive = ()=>{
             if(Number(this.getAttribute('active')) === 1) {
-            return `<a href="event?id=${this.id}" class="btn btn-warning align-self-end">J’achète</a>`
-        }else return `<a href="event?id=${this.id}" class="btn btn-dark align-self-end">Guichet fermé</a>`
+            return `<a href="event?id=${this.id}" class="btn btn-warning align-self-end buy-btn">J’achète</a>`
+        }else return `<a href="event?id=${this.id}" class="btn btn-dark align-self-end buy-btn">Guichet fermé</a>`
         }
         this.innerHTML = `
         <div class="card" style="width: 18rem;">
@@ -21,6 +21,14 @@ export class EventCard extends HTMLElement {
                 ${isActive()}
             </div>
         </div>`
+    }
+
+    get getTitle() {
+        return this.querySelector('h5').innerText;
+    }
+
+    isActive(){
+        return this.querySelector('.buy-btn').innerText = 'J’achète';
     }
 
 }
