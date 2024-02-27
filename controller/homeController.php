@@ -9,6 +9,7 @@ $endDate = '';
 $availability = 'all';
 $category = 'all';
 
+var_dump($_POST);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_POST['startDate'] !== '') $startDate = $_POST['startDate'];

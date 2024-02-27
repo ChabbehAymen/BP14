@@ -44,9 +44,9 @@ global $endDate;
 
 
 <form action="" method="post" class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light gap-3 rounded">
-    <input class="form-control me-2 m-1" type="date" value='<?php echo $startDate?>' min="<?php echo $startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <input class="form-control me-2 m-1" type="date" value='<?= $startDate?>' min="<?php echo $startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
     <p class="align-self-center m-0 w-50">End At</p>
-    <input class="form-control me-2 m-1" type="date" value=<?php echo $endDate?> name="endDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <input class="form-control me-2 m-1" type="date" name="endDate" placeholder="From Date" aria-label="Search" id="fromDate">
     <div>
 
     </div>
