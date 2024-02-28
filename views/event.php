@@ -66,7 +66,7 @@ require './controller/eventSellsController.php';
                     </div>
                     </div>';
                 } else {
-                    echo '<input type="submit" value="Guichet fermé" name="byTicked" class="btn btn-dark align-self-center">                    </div>
+                    echo '<input type="submit" value="Guichet fermé" name="byTicked" class="btn btn-dark align-self-center disabled"> </div>
                     </div>';
                 }
                 ?>
@@ -80,7 +80,7 @@ require './controller/eventSellsController.php';
         foreach (getEvents() as $_event){
             if ($_event['TITRE'] === $event['TITRE']) continue;
             $isActive = true;
-            if ($event["DISPONIBLE"] == 0) $isActive = false;
+            if ($_event["DISPONIBLE"] == 0) $isActive = false;
             echo "<event-card id=".$_event["ID_VERSION"]." img=".$_event['IMAGE']." title=".'"'.$_event['TITRE'].'"'. "active=".$isActive." category=".$_event['CATEGORIE']." endTime=".'"'.$_event['DATE'].'"'."></event-card>";
         }
         ?>

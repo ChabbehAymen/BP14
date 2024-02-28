@@ -9,16 +9,16 @@ if (isset($_POST['byTicket'])) {
     $tarifNormal = $_POST['tarifNormal'];
     $id = $_GET['id'];
 
-    var_dump(getEventDetail($id)[0]['DISPONIBLE'] != 0);
-
     if (isset($_SESSION['loggedUser']) and $_SESSION['loggedUser'] != 0) {
     if (getEventDetail($id)[0]['DISPONIBLE'] != 0) {
+        $model->createFacture($_GET['id']);
             for ($i = 0; $i < $tarifReduit; $i++) {
                 $model->byTickets($_GET['id'],'Reduit');
             }
             for ($i = 0; $i < $tarifNormal; $i++) {
                 $model->byTickets($_GET['id'],'Normal');
             }
+            header('Location: /BP14/event?'.$_GET['id']);
         }
     }else header('Location: /BP14/login');
 }
