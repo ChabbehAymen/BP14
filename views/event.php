@@ -1,6 +1,5 @@
 <?php
 require './controller/eventSellsController.php';
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,11 +12,13 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script type="module" src="views/js/event.js"></script>
 </head>
+
 <body>
 <nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/BP14/">
             Guicher
         </a>
 
@@ -38,8 +39,8 @@ session_start();
 
 <main class="w-100 p-5">
     <?php
-    $event = getEventDetail($_GET['title'])[0];
-    echo '<h1 class="w-100 text-center fs-1 fw-bold font-monospace">' . $_GET['title'] . '</h1>';
+    $event = getEventDetail($_GET['id'])[0];
+    echo '<h1 class="w-100 text-center fs-1 fw-bold font-monospace">' . $event['TITRE'] . '</h1>';
     ?>
     <div class="p-5 d-flex w-100 gap-5 flex-wrap">
         <img class="rounded" style="height: 60vh" src="./views/assets/AlNU3WTK_400x400.jpg">
@@ -49,7 +50,7 @@ session_start();
                 <i class="badge text-bg-primary">Music</i>
             </div>
             <p><?php echo $event['DESCRIPTION']?></p>
-            <form action="./controller/eventSellsController.php?title=<?php echo $_GET["title"]?>" method="post" class="d-flex flex-column gap-3 form">
+            <form action="./controller/eventSellsController.php?id=<?php echo $_GET["id"]?>" method="post" class="d-flex flex-column gap-3 form">
                 <label for="">
                     Tarif Normal:<?php echo $event['TARIF_NORMAL']?>
                     <input type="number" class="form-control w-100" value="0" min="0" name="tarifReduit">
@@ -60,12 +61,12 @@ session_start();
                 </label>
                 <?php
 
-                if (isTherePlace($event['TITRE'])) {
+                if ($event["DISPONIBLE"] != 0) {
                     echo '<input type="submit" value="J’achète" name="byTicket" class="btn btn-warning align-self-center">
                     </div>
                     </div>';
                 } else {
-                    echo '<input type="submit" value="Guichet fermé" name="byTicked" class="btn btn-dark align-self-center">                    </div>
+                    echo '<input type="submit" value="Guichet fermé" name="byTicked" class="btn btn-dark align-self-center disabled"> </div>
                     </div>';
                 }
                 ?>
@@ -76,24 +77,11 @@ session_start();
     <p class="fs-3 fw-bold">Other Events</p>
     <section class="w-100 d-flex flex-wrap gap-4 ps-4 pe-4">
         <?php
-        foreach (getEvents() as $event) {
-            if ($event['TITRE'] === $_GET['title']) continue;
-//        echo "<event-card img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'."category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
-            echo '<div class="card event-card" style="width: 18rem;">
-            <img src="views/assets/AlNU3WTK_400x400.jpg" class="card-img-top" alt="...">
-            <a class="badge text-bg-primary text-decoration-none disabled m-1 align-self-start category-label">' . $event['CATEGORIE'] . '</a>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">' . $event['TITRE'] . '</h5>
-                <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>' . $event['DATE'] . '</p>';
-            if (isTherePlace($event['TITRE'])) {
-                echo '<a href="event?title=' . $event['TITRE'] . '" class="btn btn-warning align-self-end">J’achète</a>
-                    </div>
-                    </div>';
-            } else {
-                echo '<a href="event?title=' . $event['TITRE'] . '" class="btn btn-dark align-self-end">Guichet fermé</a>
-                    </div>
-                    </div>';
-            }
+        foreach (getEvents() as $_event){
+            if ($_event['TITRE'] === $event['TITRE']) continue;
+            $isActive = true;
+            if ($_event["DISPONIBLE"] == 0) $isActive = false;
+            echo "<event-card id=".$_event["ID_VERSION"]." img=".$_event['IMAGE']." title=".'"'.$_event['TITRE'].'"'. "active=".$isActive." category=".$_event['CATEGORIE']." endTime=".'"'.$_event['DATE'].'"'."></event-card>";
         }
         ?>
 

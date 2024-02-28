@@ -3,30 +3,37 @@ require_once(__ROOT__ . '/model/HomePageModel.php');
 session_start();
 class EventSellsModel extends HomePageModel
 {
-    public function getEventByTitle($title){
-        $query = $this->pdo->prepare("SELECT * FROM EVENEMENT WHERE TITRE = '$title'");
+    public function getEventByID($id){
+        $query = $this->pdo->prepare("
+            SELECT ID_VERSION, TITRE , DATE , CATEGORIE , SALLE.DESCRIPTION, IMAGE, TARIF_REDUIT, TARIF_NORMAL  , CAPACITE - COUNT(NUM_BILLET) AS 'DISPONIBLE' 
+                    FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) 
+                    RIGHT JOIN VERSION USING(ID_VERSION) 
+                    INNER JOIN EVENEMENT USING(ID_EVENT) 
+                    INNER JOIN SALLE USING (NUM_SALLE) 
+                    WHERE ID_VERSION = $id 
+                    GROUP BY ID_VERSION");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function byTickets($title, $tickets){
-        if (!$this->insertFacture($title)) return false;
-        foreach ($tickets as $ticket){
-            $emptyPlace = $this->getFirstEmptyPlaceInSalle();
-            $query = $this->pdo->prepare("INSERT INTO BP14.BILLET VALUES (DEFAULT, (SELECT COUNT(BP14.FACTURE.NUM_FACTURE) AS ID FROM BP14.FACTURE), " . $ticket['type'] . ", $emptyPlace)");
-            if ($query->execute())continue;
+    public function byTickets($id, $type){
+            $emptyPlace = $this->getFirstEmptyPlaceInSalle($id)[0]['PLACE']+1;
+            $query = $this->pdo->prepare("INSERT INTO BP14.BILLET VALUES (DEFAULT, (SELECT MAX(NUM_FACTURE) AS ID FROM FACTURE), '$type', $emptyPlace)");
+            if ($query->execute())return true;
             else return false;
-        }
-        return true;
     }
 
-    private function insertFacture($title){
-        return $this->pdo->query("INSERT INTO BP14.FACTURE VALUES (DEFAULT, ".$_SESSION['loggedUser'].",(SELECT ID_VERSION FROM BP14.EVENEMENT INNER JOIN BP14.VERSION USING (ID_EVENT) WHERE TITRE = '$title'), '2024-02-25 04:02:15 ')");
+    private function getLastFactureUserID(){
+        return $this->pdo->query("SELECT ID_UTILISATEUR, MAX(NUM_FACTURE) FROM FACTURE;");
     }
 
-    private function getFirstEmptyPlaceInSalle()
+    public function createFacture($id){
+        return $this->pdo->query("INSERT INTO BP14.FACTURE VALUES (DEFAULT, ".$_SESSION['loggedUser'].", $id, '2024-02-25 04:02:15 ')");
+    }
+
+    private function getFirstEmptyPlaceInSalle($versionID)
     {
-        $query = $this->pdo->prepare("SELECT COUNT(PLACE) + 1 FROM BP14.BILLET;");
+        $query = $this->pdo->prepare("SELECT COUNT(PLACE) AS PLACE FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) INNER JOIN VERSION USING(ID_VERSION) INNER JOIN SALLE USING(NUM_SALLE) WHERE ID_VERSION = $versionID;");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }

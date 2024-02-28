@@ -4,11 +4,10 @@ require_once(__ROOT__ . '/model/HomePageModel.php');
 
 $model = new HomePageModel();
 
-$startDate = '01-01-2000';
-$endDate = date('Y-m-d');
+$startDate = date('Y-m-d');
+$endDate = '';
 $availability = 'all';
 $category = 'all';
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_POST['startDate'] !== '') $startDate = $_POST['startDate'];
@@ -31,10 +30,10 @@ function getCategories(): array
     return $model->getAllCategories();
 }
 
-function isTherePlace($title): bool
+function isTherePlace($ID): bool
 {
     global $model;
-    if ($model->getCapacityOfSallePerEventTitle($title) - $model->getNumberOfPlacesPerEventTitle($title) != 0)
+    if ($model->getEmptyPlaces($ID) != 0)
         return true;
     return false;
 }

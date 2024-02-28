@@ -1,55 +1,35 @@
 export class EventCard extends HTMLElement {
-    #template;
-    #shadow;
-    #_endTime;
+    #active;
 
     constructor() {
         super();
-        this.#template = document.getElementById('event-card-temp').content.cloneNode(true);
     }
 
     connectedCallback() {
-        this.#shadow = this.attachShadow({mode: "open"});
-        this.#shadow.appendChild(this.#template);
+        let isActive = ()=>{
+            if(Number(this.getAttribute('active')) === 1) {
+            return `<a href="event?id=${this.id}" class="btn btn-warning align-self-end buy-btn">J’achète</a>`
+        }else return `<a href="event?id=${this.id}" class="btn btn-dark align-self-end buy-btn">Guichet fermé</a>`
+        }
+        this.innerHTML = `
+        <div class="card" style="width: 18rem;">
+            <img src="views/assets/AlNU3WTK_400x400.jpg" class="card-img-top" alt="..."/>
+            <a href="#" class="badge text-bg-primary text-decoration-none disabled m-1 align-self-start category-label">${this.getAttribute('category')}</a>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold">${this.getAttribute('title')}</h5>
+                <p class="card-text d-flex gap-2 align-items-center"><i class="fa-regular fa-clock"></i>${this.getAttribute('endTime')}</p>
+                ${isActive()}
+            </div>
+        </div>`
     }
 
-    set img(imgPath) {
-        this.#template.querySelector('img').src = imgPath;
+    get getTitle() {
+        return this.querySelector('h5').innerText;
     }
 
-    set title(title) {
-        this.#template.querySelector('h5').innerText = title;
-    }
-
-    get title() {
-        return this.shadowRoot.querySelector('h5').innerText;
-    }
-
-    set category(category) {
-        this.#template.querySelector('.category-label').innerText = category;
-    }
-
-    set leftTime(time) {
-        this.#template.querySelector('p').innerText = time;
-    }
-
-    set endTime(endTime) {
-        this.#_endTime = endTime;
+    isActive(){
+        return this.querySelector('.buy-btn').innerText = 'J’achète';
     }
 
 }
 
-// <template id="event-card-temp">
-//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-//           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-//           crossOrigin="anonymous"/>
-//     <div className="card" style="width: 18rem;">
-//         <img src="views/assets/AlNU3WTK_400x400.jpg" className="card-img-top" alt="..."/>
-//         <a href="#" className="btn btn-dark p-1 disabled m-1 align-self-start category-label">Music</a>
-//         <div className="card-body d-flex flex-column">
-//             <h5 className="card-title fw-bold">Card title</h5>
-//             <p className="card-text d-flex gap-2 align-items-center"><i className="fa-regular fa-clock"></i>20:40:00</p>
-//             <a href="#" className="btn btn-warning align-self-end">Detail</a>
-//         </div>
-//     </div>
-// </template>

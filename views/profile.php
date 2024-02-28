@@ -12,15 +12,20 @@
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
-<body class="d-flex align-items-center justify-content-center" style="height: 100vh">
-<form class="d-flex flex-column p-5 rounded shadow-lg gap-3" action="./controller/signupController.php" method="post">
-    <p class="form-label align-self-center fw-bold"> Enjoy Our Platform :)</p>
-    <input class="form-control" type="text" placeholder="Your Name" name="firstName">
-    <input class="form-control" type="text" placeholder="Last Name" name="lastName">
-    <input class="form-control" type="email" placeholder="Email Or User Name" name="email">
-    <input class="form-control" type="text" placeholder="Password" name="password">
-    <input class="align-self-center btn btn-warning" type="submit" value="Register" name="register">
-    <p class="form-text align-self-center">You Have Account? <a class="link" href="login">Login!</a></p>
-</form>
+<body class="" style="height: 100vh">
+<nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/BP14/">
+            Guicher
+        </a>
+
+        <div class="d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <a class="fa-solid fa-home search-icon text-dark"></a>
+            </div>
+        </div>
+
+</nav>
+<main></main>
 </body>
 </html>
