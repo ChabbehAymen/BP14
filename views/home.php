@@ -15,38 +15,21 @@ global $endDate;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="views/css/home.style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="views/js/home.js"></script>
 </head>
 <body style="height: 100vh">
-<nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            Guicher
-        </a>
 
-        <div class="d-flex justify-content-end align-items-center">
-            <div class="d-flex align-items-center gap-3">
-                <input placeholder="Search..." class="border border-0 search-input p-1 rounded closed">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <?php
-                if (isset($_SESSION['loggedUser']) and $_SESSION['loggedUser'] != 0){
-                    echo'<a class="fa-solid fa-user btn" href="profile"></a>';
-                }else{
-                    echo '
-            <a type="button" class="btn btn-outline-warning mx-3" href="login">login</a>
-            <a type="button" class="btn btn-outline-warning mx-3" href="signup">Sign Up</a>';
-                }
-                ?>
-            </div>
-        </div>
-</nav>
-
+<?php require './views/php_components/navBar.php'; printNavBar(true)?>
 
 <form action="" method="post" class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light gap-3 rounded">
-    <input class="form-control me-2 m-1" type="date" value='<?=$startDate?>' min="<?=$startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <input class="form-control me-2 m-1 start-date" type="date" value='<?=$startDate?>' min="<?=$startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
     <p class="align-self-center m-0 w-50">End At</p>
-    <input class="form-control me-2 m-1" type="date" name="endDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <input class="form-control me-2 m-1 end-date" type="date" name="endDate" placeholder="From Date" aria-label="Search" id="fromDate" disabled>
     <div>
 
     </div>
@@ -75,7 +58,7 @@ global $endDate;
     <?php
     foreach (getEvents() as $event){
         $isActive = true;
-    if ($event['DISPONIBLE'] == 0) $isActive = false;
+    if ($event['DISPONIBLE'] == 0) $isActive = 0;
         echo "<event-card id=".$event["ID_VERSION"]." img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'. "active=".$isActive." category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
     }
     ?>
@@ -83,6 +66,9 @@ global $endDate;
 </section>
 
 <footer class="p-5 bg-dark mt-4"></footer>
+
+<script>
+</script>
 
 </body>
 </html>
