@@ -56,13 +56,13 @@ require './controller/eventSellsController.php';
     </div>
 
     <section class="w-full my-44">
-        <div class="w-fit mx-auto">
+        <div class="w-fit mx-auto d-flex flex-column align-items-center">
             <span class="fs-2 fw-semibold">Time Is Going</span>
-            <div class="d-flex gap-3 fs-4 fw-semibold clock-count-down" id='<?=$event['DATE']?>' >
-                <i>1j</i><span>:</span>
-                <i>1h</i><span>:</span>
-                <i>1m</i><span>:</span>
-                <i>1s</i>
+            <div class="d-flex gap-3 fs-4 fw-semibold  clock-count-down" id='<?=$event['DATE']?>' >
+                <i class="days">1j</i><span>:</span>
+                <i class="hours">1h</i><span>:</span>
+                <i class="mints">1m</i><span>:</span>
+                <i class="seconds">1s</i>
             </div>
         </div>
     </section>
