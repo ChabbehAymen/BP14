@@ -12,31 +12,12 @@ require './controller/eventSellsController.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="views/js/event.js"></script>
 </head>
 
 <body>
-<nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/BP14/">
-            Guicher
-        </a>
-
-        <div class="d-flex justify-content-end align-items-center">
-            <div class="d-flex align-items-center gap-3">
-                <?php
-                if (isset($_SESSION['loggedUser']) and $_SESSION['loggedUser'] != 0) {
-                    echo '<a class="fa-solid fa-user btn" href="profile"></a>';
-                } else {
-                    echo '
-            <a type="button" class="btn btn-outline-warning mx-3" href="login">login</a>
-            <a type="button" class="btn btn-outline-warning mx-3" href="signup">Sign Up</a>';
-                }
-                ?>
-            </div>
-        </div>
-</nav>
-
+<?php require './views/php_components/navBar.php'; printNavBar(false)?>
 <main class="w-100 p-5">
     <?php
     $event = getEventDetail($_GET['id'])[0];
@@ -53,11 +34,11 @@ require './controller/eventSellsController.php';
             <form action="./controller/eventSellsController.php?id=<?php echo $_GET["id"]?>" method="post" class="d-flex flex-column gap-3 form">
                 <label for="">
                     Tarif Normal:<?php echo $event['TARIF_NORMAL']?>
-                    <input type="number" class="form-control w-100" value="0" min="0" name="tarifReduit">
+                    <input type="number" class="form-control w-100" value="0" min="0" name="tarifNormal">
                 </label>
                 <label for="">
                     Tarif Reduit:<?php echo $event['TARIF_REDUIT']?>
-                    <input type="number" class="form-control w-100" value="0" min="0" name="tarifNormal">
+                    <input type="number" class="form-control w-100" value="0" min="0" name="tarifReduit">
                 </label>
                 <?php
 
@@ -74,6 +55,18 @@ require './controller/eventSellsController.php';
         </div>
     </div>
 
+    <section class="w-full my-44">
+        <div class="w-fit mx-auto">
+            <span class="fs-2 fw-semibold">Time Is Going</span>
+            <div class="d-flex gap-3 fs-4 fw-semibold clock-count-down" id='<?=$event['DATE']?>' >
+                <i>1j</i><span>:</span>
+                <i>1h</i><span>:</span>
+                <i>1m</i><span>:</span>
+                <i>1s</i>
+            </div>
+        </div>
+    </section>
+
     <p class="fs-3 fw-bold">Other Events</p>
     <section class="w-100 d-flex flex-wrap gap-4 ps-4 pe-4">
         <?php
@@ -86,6 +79,7 @@ require './controller/eventSellsController.php';
         ?>
 
     </section>
+    
 </main>
 
 <footer class="p-5 bg-dark mt-4"></footer>

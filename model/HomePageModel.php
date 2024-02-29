@@ -17,7 +17,7 @@ class HomePageModel
     {
         $q  ="SELECT ID_VERSION, TITRE , DATE , CATEGORIE , IMAGE , CAPACITE - COUNT(NUM_BILLET) AS 'DISPONIBLE' FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) RIGHT JOIN VERSION USING(ID_VERSION) INNER JOIN EVENEMENT USING(ID_EVENT) INNER JOIN SALLE USING (NUM_SALLE) GROUP BY ID_VERSION HAVING DATE >= '$startDate'";
         // var_dump($endDate);
-        if ($endDate != '')$q=$q." and <= ".$endDate."'";
+        if ($endDate != '')$q=$q." and DATE <= '".$endDate."'";
         if ($category !== 'all')$q=$q." and CATEGORIE = '$category'";
         $query = $this->pdo->prepare($q);
         $query->execute();

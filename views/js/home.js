@@ -47,3 +47,11 @@ document.querySelector('.active-select').addEventListener('change', e=>{
         }
     }
 });
+
+// date inputs validation
+document.querySelector('.start-date').addEventListener('input', e=>{
+    const endDateInput = document.querySelector('.end-date');
+    endDateInput.setAttribute('min', e.target.value);
+    endDateInput.disabled = false;
+
+});

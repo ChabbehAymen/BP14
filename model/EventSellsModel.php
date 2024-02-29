@@ -22,13 +22,9 @@ class EventSellsModel extends HomePageModel
             if ($query->execute())return true;
             else return false;
     }
-
-    private function getLastFactureUserID(){
-        return $this->pdo->query("SELECT ID_UTILISATEUR, MAX(NUM_FACTURE) FROM FACTURE;");
-    }
-
+    
     public function createFacture($id){
-        return $this->pdo->query("INSERT INTO BP14.FACTURE VALUES (DEFAULT, ".$_SESSION['loggedUser'].", $id, '2024-02-25 04:02:15 ')");
+        return $this->pdo->query("INSERT INTO BP14.FACTURE VALUES (DEFAULT, ".$_SESSION['loggedUser'].", $id, '".date('Y-m-d h:m:s', time())."')");
     }
 
     private function getFirstEmptyPlaceInSalle($versionID)
