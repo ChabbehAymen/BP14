@@ -23,7 +23,6 @@ global $endDate;
     <script type="module" src="views/js/home.js"></script>
 </head>
 <body style="height: 100vh">
-
 <?php require './views/php_components/navBar.php'; printNavBar(true)?>
 
 <form action="" method="post" class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light gap-3 rounded">
