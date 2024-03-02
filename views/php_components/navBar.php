@@ -12,7 +12,7 @@ function printNavBar($withSearchBar): void
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
     <li><a class="dropdown-item active" href="profile">Account</a></li>
-    <li><a class="dropdown-item" href="#">Bought</a></li>
+    <li><a class="dropdown-item" href="purchases">Purchases</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="./controller/logout.php">Log out</a></li>
   </ul>

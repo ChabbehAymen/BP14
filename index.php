@@ -19,6 +19,10 @@ switch (strtok($requestUri, '?')){
     case $baseDir.'event':
         require __DIR__.$viewDir.'event.php';
         break;
-
+    case $baseDir.'purchases':
+        require __DIR__.$viewDir.'purchases.php';
+        break;
+    default:
+        break;
 }
 

@@ -53,5 +53,11 @@ document.querySelector('.start-date').addEventListener('input', e=>{
     const endDateInput = document.querySelector('.end-date');
     endDateInput.setAttribute('min', e.target.value);
     endDateInput.disabled = false;
-
 });
+
+// enable all inputs when submit so the data can be read in the searver
+for (const input of document.querySelectorAll('input')) {
+    document.querySelector('input[type=submit]').addEventListener('click', evt => {
+       input.disabled = false;
+    });
+}
