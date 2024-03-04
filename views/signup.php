@@ -1,3 +1,7 @@
+<?php
+session_start();
+if (isset($_SESSION['loggedUser'])) header('Location: /BP14/');
+?>
 <!doctype html>
 <html lang="en">
 <head>

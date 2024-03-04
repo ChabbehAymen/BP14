@@ -37,7 +37,7 @@
             <div class="d-flex align-items-center justify-between">
                 <p class="fs-5 fw-bold"> Title</p>
                 <p>15/3/2024</p>
-                <p class="badge text-bg-primary">Music</p>
+                <p class="">225,15DH</p>
                 <i class="fa fa-caret-down"></i>
             </div>
             <div class="">
@@ -46,6 +46,7 @@
                     <p>Place 11: Billet Normal</p>
                 </div>
             </div>
+            <button class="btn btn-outline-warning mx-auto">Print Facture</button>
         </div>
     </section>
 </main>
