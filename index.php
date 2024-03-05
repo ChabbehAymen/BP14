@@ -23,6 +23,7 @@ switch (strtok($requestUri, '?')){
         require __DIR__.$viewDir.'purchases.php';
         break;
     default:
-        break;
+        require __DIR__.$viewDir.'404.php';
+    break;
 }
 
