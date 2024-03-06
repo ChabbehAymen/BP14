@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (isset($_SESSION['loggedUser'])) header('Location: /BP14/');
+require_once (__ROOT__.'/helpers/Router.php');
+if (isset($_SESSION['loggedUser'])) Router::route('home');
 ?>
 <!doctype html>
 <html lang="en">

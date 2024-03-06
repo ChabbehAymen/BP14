@@ -23,3 +23,8 @@ const timer = setInterval(function () {
         clearInterval(timer);
     }
 }, 1000);
+// activate scrolling after a successful purchase
+document.querySelector('.dismiss-btn').addEventListener('click', e=>{
+    document.querySelector('.purchasing-successful').remove();
+    document.querySelector('body').style.overflow = 'auto'
+})

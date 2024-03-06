@@ -1,6 +1,7 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
 require_once(__ROOT__ . '/model/AuthenticationModel.php');
+require_once (__ROOT__.'/helpers/Router.php');
 
 session_start();
 $model = new AuthenticationModel();
@@ -24,7 +25,7 @@ if (isset($_POST['login'])){
         if ($userFound){
                 successfulLogin($userID);
         }else{
-                header('Location: /BP14/login');
+                Router::route('home');
         }
     }
 }
@@ -48,5 +49,5 @@ function successfulLogin($userID): void
 
 function navigateToHomePage(): void
 {
-    header('Location: /BP14/');
+    Router::route('home');
 }

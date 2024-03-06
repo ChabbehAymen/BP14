@@ -1,5 +1,6 @@
 <?php
 require './controller/eventSellsController.php';
+require_once(__ROOT__ . '/helpers/Reporter.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,12 +13,38 @@ require './controller/eventSellsController.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="./views/css/event.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="views/js/event.js"></script>
 </head>
-
 <body>
-<?php require './views/php_components/navBar.php'; printNavBar(false)?>
+<?php
+require './views/php_components/navBar.php';
+printNavBar(false);
+?>
+
+<?php if (Reporter::getReport() === Reporter::$PURCHASE_SUCCEEDED ):?>
+    <div class="absolute w-min items-center justify-center bg-gray-100 purchasing-successful" style="top: 30%; left: 40%">
+        <div class="rounded-lg bg-gray-50 px-16 py-14">
+            <div class="flex justify-center">
+                <div class="rounded-full bg-green-200 p-6">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-500 p-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <h3 class="my-4 text-center text-3xl font-semibold text-gray-700">Enjoy Our Events!!!</h3>
+            <p class="w-[230px] text-center font-normal text-gray-600">Your order have been taken and is being attended to</p>
+            <button class="mx-auto mt-10 block rounded-xl border-4 border-transparent bg-orange-400 px-6 py-3 text-center text-base font-medium text-orange-100 outline-8 hover:outline hover:duration-300 dismiss-btn">Dismiss</button>
+        </div>
+    </div>
+    <script>document.querySelector('body').style.overflow = 'hidden';</script>
+<?php
+Reporter::dropReport();
+endif;?>
+
 <main class="w-100 p-5">
     <?php
     $event = getEventDetail($_GET['id'])[0];
@@ -30,14 +57,15 @@ require './controller/eventSellsController.php';
                 <p class="fs-3 fw-bold m-2 mb-3">Description</p>
                 <i class="badge text-bg-primary">Music</i>
             </div>
-            <p><?php echo $event['DESCRIPTION']?></p>
-            <form action="./controller/eventSellsController.php?id=<?php echo $_GET["id"]?>" method="post" class="d-flex flex-column gap-3 form">
+            <p><?php echo $event['DESCRIPTION'] ?></p>
+            <form action="./controller/eventSellsController.php?id=<?php echo $_GET["id"] ?>" method="post"
+                  class="d-flex flex-column gap-3 form">
                 <label for="">
-                    Tarif Normal:<?php echo $event['TARIF_NORMAL']?>
+                    Tarif Normal:<?php echo $event['TARIF_NORMAL'] ?>
                     <input type="number" class="form-control w-100" value="0" min="0" name="tarifNormal">
                 </label>
                 <label for="">
-                    Tarif Reduit:<?php echo $event['TARIF_REDUIT']?>
+                    Tarif Reduit:<?php echo $event['TARIF_REDUIT'] ?>
                     <input type="number" class="form-control w-100" value="0" min="0" name="tarifReduit">
                 </label>
                 <?php
@@ -58,7 +86,7 @@ require './controller/eventSellsController.php';
     <section class="w-full my-44">
         <div class="w-fit mx-auto d-flex flex-column align-items-center">
             <span class="fs-2 fw-semibold">Time Is Going</span>
-            <div class="d-flex gap-3 fs-4 fw-semibold  clock-count-down" id='<?=$event['DATE']?>' >
+            <div class="d-flex gap-3 fs-4 fw-semibold  clock-count-down" id='<?= $event['DATE'] ?>'>
                 <i class="days">1j</i><span>:</span>
                 <i class="hours">1h</i><span>:</span>
                 <i class="mints">1m</i><span>:</span>
@@ -70,16 +98,16 @@ require './controller/eventSellsController.php';
     <p class="fs-3 fw-bold">Other Events</p>
     <section class="w-100 d-flex flex-wrap gap-4 ps-4 pe-4">
         <?php
-        foreach (getEvents() as $_event){
+        foreach (getEvents() as $_event) {
             if ($_event['TITRE'] === $event['TITRE']) continue;
             $isActive = true;
             if ($_event["DISPONIBLE"] == 0) $isActive = false;
-            echo "<event-card id=".$_event["ID_VERSION"]." img=".$_event['IMAGE']." title=".'"'.$_event['TITRE'].'"'. "active=".$isActive." category=".$_event['CATEGORIE']." endTime=".'"'.$_event['DATE'].'"'."></event-card>";
+            echo "<event-card id=" . $_event["ID_VERSION"] . " img=" . $_event['IMAGE'] . " title=" . '"' . $_event['TITRE'] . '"' . "active=" . $isActive . " category=" . $_event['CATEGORIE'] . " endTime=" . '"' . $_event['DATE'] . '"' . "></event-card>";
         }
         ?>
 
     </section>
-    
+
 </main>
 
 <footer class="p-5 bg-dark mt-4"></footer>

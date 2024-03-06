@@ -1,11 +1,10 @@
 <?php
-
-namespace helpers;
 session_start();
 
 class Reporter
 {
     public static int $PURCHASE_SUCCEEDED = 0;
+    public static int $PURCHASE_FIELD = 1;
 
     static function setReport(int $report):void
     {
@@ -14,8 +13,12 @@ class Reporter
 
     static function getReport()
     {
-        return $_SESSION['report'];
+        return $_SESSION['report'] ?? null;
+    }
 
+    static function dropReport()
+    {
+        unset($_SESSION['report']);
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
 require_once(__ROOT__ . '/model/AuthenticationModel.php');
+require_once (__ROOT__.'/helpers/Router.php');
 
 $model = new AuthenticationModel();
 if (isset($_POST['register'])) {
@@ -11,8 +12,8 @@ if (isset($_POST['register'])) {
 
     if (strlen($firstName) >= 4 and strlen($lastName) >= 4 and isEmailValid() and strlen($password) >= 6) {
         $insertion = $model->insertUser($firstName, $lastName, $email, $password);
-        if ($insertion)header('Location: /BP14/login');
-        else header('Location: /BP14/signup');
+        if ($insertion)Router::route('login');
+        else Router::route('signup');
     }
 
 }

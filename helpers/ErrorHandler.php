@@ -1,6 +1,4 @@
 <?php
-
-namespace helpers;
 session_start();
 
 class ErrorHandler
@@ -19,7 +17,7 @@ class ErrorHandler
         return $_SESSION['error'];
     }
 
-    static function unsetErrors()
+    static function unsetErrors(): void
     {
         unset($_SESSION['error']);
     }

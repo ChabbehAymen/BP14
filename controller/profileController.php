@@ -2,12 +2,12 @@
 session_start();
 define("__ROOT__", dirname(dirname(__FILE__)));
 require_once __ROOT__.'/model/AuthenticationModel.php';
+require_once (__ROOT__.'/helpers/Router.php');
 $model = new AuthenticationModel();
 
 
 if (isset($_POST['update'])){
     $userID = $_SESSION['loggedUser'];
-    var_dump($_POST);
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $password = $_POST['password'];
@@ -23,7 +23,7 @@ if (isset($_POST['update'])){
             $model->updateUserPassword($userID, $password);
         }
     }
-    header('Location: /BP14/profile');
+    Router::route('profile');
 }
 
 function getUserById(): array{

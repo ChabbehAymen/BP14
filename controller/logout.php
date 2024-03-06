@@ -1,4 +1,5 @@
 <?php
+require_once (__ROOT__.'/helpers/Router.php');
 session_start();
 unset($_SESSION['loggedUser']);
-header('Location: /BP14/');
+Router::route('home');

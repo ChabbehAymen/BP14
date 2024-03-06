@@ -1,4 +1,8 @@
-<?php require './controller/purchasesController.php'; ?>
+<?php
+require './controller/purchasesController.php';
+require './helpers/Router.php';
+if(!isset($_SESSION['loggedUser'])) Router::route('home');
+?>
 <!doctype html>
 <html lang="en">
 <head>
