@@ -11,9 +11,9 @@ class EventSellsModel extends HomePageModel
                     RIGHT JOIN VERSION USING(ID_VERSION) 
                     INNER JOIN EVENEMENT USING(ID_EVENT) 
                     INNER JOIN SALLE USING (NUM_SALLE) 
-                    WHERE ID_VERSION = $id 
+                    WHERE ID_VERSION = :id 
                     GROUP BY ID_VERSION");
-        $query->execute();
+        $query->execute(array('id'=>$id));
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 

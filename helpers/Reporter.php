@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 class Reporter
 {
@@ -11,12 +11,12 @@ class Reporter
         $_SESSION['report'] = $report;
     }
 
-    static function getReport()
+    static function getReport(): mixed
     {
         return $_SESSION['report'] ?? null;
     }
 
-    static function dropReport()
+    static function dropReport(): void
     {
         unset($_SESSION['report']);
     }

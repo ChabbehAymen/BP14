@@ -1,6 +1,7 @@
 <?php
 require './controller/eventSellsController.php';
 require_once(__ROOT__ . '/helpers/Reporter.php');
+if (!isset($_SESSION['loggedUser']))Router::route('home');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,8 @@ require_once(__ROOT__ . '/helpers/Reporter.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./views/css/event.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="views/js/event.js"></script>
@@ -41,9 +44,22 @@ printNavBar(false);
         </div>
     </div>
     <script>document.querySelector('body').style.overflow = 'hidden';</script>
-<?php
-Reporter::dropReport();
-endif;?>
+    <?php elseif (Reporter::getReport()=== Reporter::$PURCHASE_FIELD):?>
+        <div class="absolute w-min items-center justify-center bg-gray-100 purchasing-successful" style="top: 30%; left: 40%">
+        <div class="rounded-lg bg-gray-50 px-16 py-14">
+            <div class="flex justify-center">
+                <div class="rounded-full bg-red-200 p-6">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-500 p-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+                    </div>
+                </div>
+            </div>
+            <h3 class="my-4 text-center text-3xl font-semibold text-gray-700">Enjoy Our Events!!!</h3>
+            <p class="w-[230px] text-center font-normal text-gray-600">Your order have been taken and is being attended to</p>
+            <button class="mx-auto mt-10 block rounded-xl border-4 border-transparent bg-orange-400 px-6 py-3 text-center text-base font-medium text-orange-100 outline-8 hover:outline hover:duration-300 dismiss-btn">Dismiss</button>
+        </div>
+    </div>
+    <?php Reporter::dropReport();endif;?>
 
 <main class="w-100 p-5">
     <?php
@@ -114,6 +130,7 @@ endif;?>
 
 </body>
 </html>
+
 
 
 

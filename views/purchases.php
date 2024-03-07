@@ -1,27 +1,25 @@
 <?php
 require './controller/purchasesController.php';
 require './helpers/Router.php';
-if(!isset($_SESSION['loggedUser'])) Router::route('home');
+if (!isset($_SESSION['loggedUser'])) Router::route('home');
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <header>
-
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Login</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-              integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="stylesheet" href="./views/css/purchases.css">
-        <script src="./views/js/purchases.js" defer></script>
-        <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="./views/css/purchases.css">
+    <script src="./views/js/purchases.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light d-flex align-items-center p-3">
@@ -32,7 +30,6 @@ if(!isset($_SESSION['loggedUser'])) Router::route('home');
         </a>
     </div>
 </nav>
-</header>
 <main class="px-24 py-11">
     <div class="d-flex align-items-center justify-between">
         <p class="fw-bold fs-4">Purchased Events</p>
@@ -68,22 +65,22 @@ if(!isset($_SESSION['loggedUser'])) Router::route('home');
                             <tbody>
                             <?php
                             $purchases = getPurchases();
-//                            var_dump($purchases);
+                            //                            var_dump($purchases);
                             if ($purchases !== false) {
                                 foreach ($purchases as $purchase):
                                     ?>
                                     <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 facture-row"
-                                        userName='<?php echo $purchase['NOM'].' '.$purchase['PRENOM']?>'
-                                        email='<?=$purchase['EMAIL']?>'
-                                        titre='<?=$purchase['TITRE']?>'
-                                        date='<?=$purchase['DATE_ACHAT']?>'
-                                        tarifNomalPrix='<?=$purchase['TARIF_NORMAL']?>'
-                                        tarifReduit='<?=$purchase['TARIF_REDUIT']?>'
-                                        totalNormal='<?=$purchase['TOTAL_NORMAL']?>'
-                                        totalReduit='<?=$purchase['TOTAL_REDUIT']?>'
-                                        totalBillet='<?=$purchase['TOTAL_BILLET']?>'
+                                        userName='<?php echo $purchase['NOM'] . ' ' . $purchase['PRENOM'] ?>'
+                                        email='<?= $purchase['EMAIL'] ?>'
+                                        titre='<?= $purchase['TITRE'] ?>'
+                                        date='<?= $purchase['DATE_ACHAT'] ?>'
+                                        tarifNomalPrix='<?= $purchase['TARIF_NORMAL'] ?>'
+                                        tarifReduit='<?= $purchase['TARIF_REDUIT'] ?>'
+                                        totalNormal='<?= $purchase['TOTAL_NORMAL'] ?>'
+                                        totalReduit='<?= $purchase['TOTAL_REDUIT'] ?>'
+                                        totalBillet='<?= $purchase['TOTAL_BILLET'] ?>'
                                     >
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 facture-id" ><?= $purchase['NF'] ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 facture-id"><?= $purchase['NF'] ?></td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             <?= $purchase['DATE_ACHAT'] ?>
                                         </td>
@@ -108,7 +105,6 @@ if(!isset($_SESSION['loggedUser'])) Router::route('home');
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 </main>
@@ -166,9 +162,8 @@ if(!isset($_SESSION['loggedUser'])) Router::route('home');
                     </div>
                     <div class="d-flex gap-2">
                         <i class="fa fa-phone"></i>
-                        <p class="user-name">
+                        <p class="user-name"></p>
                     </div>
-                    </p>
                 </div>
             </div>
         </div>

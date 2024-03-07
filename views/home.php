@@ -26,7 +26,7 @@ global $endDate;
 <?php require './views/php_components/navBar.php'; printNavBar(true)?>
 
 <form action="" method="post" class="d-flex  container mt-5 shadow-sm p-3 mb-5 bg-light gap-3 rounded">
-    <input class="form-control me-2 m-1 start-date" type="date" value='<?=$startDate?>' min="<?=$startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
+    <input class="form-control me-2 m-1 start-date" type="date" min="<?=$startDate?>" name="startDate" placeholder="From Date" aria-label="Search" id="fromDate">
     <p class="align-self-center m-0 w-50">End At</p>
     <input class="form-control me-2 m-1 end-date" type="date" name="endDate" placeholder="From Date" aria-label="Search" id="fromDate" disabled>
     <div>
@@ -52,23 +52,20 @@ global $endDate;
 </form>
 
 <section class="w-100 d-flex flex-wrap gap-4 ps-4 pe-4" style="height: 100%">
-
-
     <?php
-    foreach (getEvents() as $event){
-        $isActive = true;
-    if ($event['DISPONIBLE'] == 0) $isActive = 0;
-        echo "<event-card id=".$event["ID_VERSION"]." img=".$event['IMAGE']." title=".'"'.$event['TITRE'].'"'. "active=".$isActive." category=".$event['CATEGORIE']." endTime=".'"'.$event['DATE'].'"'."></event-card>";
-    }
-    ?>
+    $data = getEvents();
+    if (count($data)!==0 or $data!== false) {
+        foreach ($data as $event) {
+            $isActive = true;
+            if ($event['DISPONIBLE'] == 0) $isActive = 0;
+            echo "<event-card id=" . $event["ID_VERSION"] . " img=" . $event['IMAGE'] . " title=" . '"' . $event['TITRE'] . '"' . "active=" . $isActive . " category=" . $event['CATEGORIE'] . " endTime=" . '"' . $event['DATE'] . '"' . "></event-card>";
+        }
+    }else?>
+        <div class="w-full d-flex align-items-center justify-content-center no-data-img">
+            <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg" class="h-1/2">
+        </div>
 
 </section>
-
-<footer class="p-5 bg-dark mt-4"></footer>
-
-<script>
-</script>
-
 </body>
 </html>
 

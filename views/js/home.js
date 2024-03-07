@@ -61,3 +61,7 @@ for (const input of document.querySelectorAll('input')) {
        input.disabled = false;
     });
 }
+
+//removing  no data found img when there is data
+if (eventCards.length > 0)
+    document.querySelector('.no-data-img').remove();
