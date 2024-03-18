@@ -1,18 +1,7 @@
 <?php
-
-class HomePageModel
+require_once(__ROOT__ . '/model/DBconf.php');
+class HomePageModel extends DBconf
 {
-    protected $pdo;
-    public function __construct()
-    {
-
-        try {
-            $this->pdo = new PDO('mysql:host=localhost;dbname=BP14;charset=UTF8', 'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-        }catch (PDOException $e){
-            echo $e->getMessage();
-        }
-    }
-
     public function getAllEvents($startDate, $endDate, $category)
     {
         $q  ="SELECT ID_VERSION, TITRE , DATE , CATEGORIE , IMAGE , CAPACITE - COUNT(NUM_BILLET) AS 'DISPONIBLE' FROM BILLET INNER JOIN FACTURE USING(NUM_FACTURE) RIGHT JOIN VERSION USING(ID_VERSION) INNER JOIN EVENEMENT USING(ID_EVENT) INNER JOIN SALLE USING (NUM_SALLE) GROUP BY ID_VERSION HAVING DATE >= '$startDate'";

@@ -1,18 +1,8 @@
 <?php
+require_once(__ROOT__ . '/model/DBconf.php');
 
-class AuthenticationModel
+class AuthenticationModel extends DBconf
 {
-    private $pdo;
-    public function __construct()
-    {
-
-        try {
-            $this->pdo = new PDO('mysql:host=localhost;dbname=BP14;charset=UTF8', 'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-        }catch (PDOException $e){
-            echo $e->getMessage();
-        }
-    }
-
     public function insertUser($firstName, $lastName, $email, $password): bool
     {
         return $this->pdo->query("INSERT INTO UTILISATEUR VALUES(DEFAULT, '$firstName', '$lastName', '$email', '$password')");
@@ -26,9 +16,17 @@ class AuthenticationModel
     }
 
     public function getUserById($ID): array{
-        $query = $this->pdo->prepare('SELECT * FROM `UTILISATEUR` WHERE :ID ; ');
+        $query = $this->pdo->prepare('SELECT * FROM `UTILISATEUR` WHERE ID_UTILISATEUR = :ID ; ');
         $query->execute(array('ID'=>$ID));
         return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $query = $this->pdo->prepare('SELECT * FROM `UTILISATEUR` WHERE EMAIL = :email ; ');
+        $query->execute(array('email'=>$email));
+        return $query->fetch(PDO::FETCH_ASSOC);
+
     }
 
     public function updateUserFirstName($ID, $firstName): bool
