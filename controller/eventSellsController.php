@@ -8,7 +8,7 @@ $model = new EventSellsModel();
 
 if (isset($_POST['byTicket'])) {
     if (empty($_SESSION['loggedUser'])) {
-        Reporter::setReport(Reporter::$NO_ACCOUNT_FOUND);
+        Reporter::setReport(Reporter::$NO_CONNECTED_USER);
         Router::route('event',['key'=>'id','value'=>$_GET['id']]);
     }
     $tarifReduit = (int)$_POST['tarifReduit'];

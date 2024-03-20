@@ -13,7 +13,7 @@ if (isset($_POST['register'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if ($model->getUserByEmail($email) === false) {
+    if (!empty($model->getUserByEmail($email))) {
         Reporter::setReport(Reporter::$ACCOUNT_EXISTS);
         Router::route('signup');
     } else {
