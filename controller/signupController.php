@@ -6,7 +6,6 @@ require_once(__ROOT__ . '/helpers/Reporter.php');
 session_start();
 
 
-var_dump($_POST);
 $model = new AuthenticationModel();
 if (isset($_POST['register'])) {
     $firstName = $_POST['firstName'];
@@ -14,8 +13,7 @@ if (isset($_POST['register'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    var_dump($model->getUserByEmail($email));
-    if ($model->getUserByEmail($email) !== false) {
+    if ($model->getUserByEmail($email) === false) {
         Reporter::setReport(Reporter::$ACCOUNT_EXISTS);
         Router::route('signup');
     } else {

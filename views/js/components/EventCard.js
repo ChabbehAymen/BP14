@@ -28,7 +28,7 @@ export class EventCard extends HTMLElement {
     }
 
     isActive(){
-        return this.querySelector('.buy-btn').innerText = 'J’achète';
+        return this.querySelector('.buy-btn').innerText === 'J’achète';
     }
 
 }

@@ -58,8 +58,11 @@ printNavBar(false);
             <button class="mx-auto mt-10 block rounded-xl border-4 border-transparent bg-orange-400 px-6 py-3 text-center text-base font-medium text-orange-100 outline-8 hover:outline hover:duration-300 dismiss-btn">Dismiss</button>
         </div>
     </div>
+    <?php elseif (Reporter::getReport()===Reporter::$NO_CONNECTED_USER):?>
     <?php Reporter::dropReport();endif;?>
 
+<?php if (empty($_GET['id']) or empty(getEventDetail($_GET['id'])) ): require './views/php_components/noDataFundImg.php';?>
+<?php else:?>
 <main class="w-100 p-5">
     <?php
     $event = getEventDetail($_GET['id'])[0];
@@ -124,6 +127,7 @@ printNavBar(false);
     </section>
 
 </main>
+<?php endif;?>
 
 <footer class="p-5 bg-dark mt-4"></footer>
 

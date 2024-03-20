@@ -7,6 +7,10 @@ require_once(__ROOT__ . '/helpers/Reporter.php');
 $model = new EventSellsModel();
 
 if (isset($_POST['byTicket'])) {
+    if (empty($_SESSION['loggedUser'])) {
+        Reporter::setReport(Reporter::$NO_ACCOUNT_FOUND);
+        Router::route('event',['key'=>'id','value'=>$_GET['id']]);
+    }
     $tarifReduit = (int)$_POST['tarifReduit'];
     $tarifNormal = (int)$_POST['tarifNormal'];
     $id = $_GET['id'];
