@@ -1,7 +1,6 @@
 <?php
 require './controller/eventSellsController.php';
 require_once(__ROOT__ . '/helpers/Reporter.php');
-if (!isset($_SESSION['loggedUser']))Router::route('home');
 ?>
 <!DOCTYPE html>
 <html lang="en">
